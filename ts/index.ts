@@ -8,6 +8,8 @@ class Application {
         eventListener.add(
             'sample', 'click', button, ()=>alert('clicked')
         )
+
+        eventListener.remove('sample')
     }
 }
 
