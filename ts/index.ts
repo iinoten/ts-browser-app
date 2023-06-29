@@ -7,7 +7,9 @@ class Application {
     private readonly eventListener = new EventListener()
     private readonly taskCollection = new TaskCollection()
     private readonly taskRenderer= new TaskRenderer(
-        document.getElementById('todoList') as HTMLElement
+        document.getElementById('todoList') as HTMLElement,
+        document.getElementById('doingList') as HTMLElement,
+        document.getElementById('doneList') as HTMLElement,
     )
     
     start() {
@@ -15,6 +17,8 @@ class Application {
         this.eventListener.add(
             'submit-handler', 'submit', createForm, this.handleSubmit
         )
+
+        this.taskRenderer.subscribeDragAndDrop()
     }
 
     private handleSubmit = (e: Event) => {
