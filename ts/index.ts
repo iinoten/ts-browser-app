@@ -24,11 +24,17 @@ class Application {
         this.taskRenderer.subscribeDragAndDrop(this.handleDragAndDrop)
     }
 
+    private executeDeleteTask = (task: Task) => {
+        this.eventListener.remove(task.id)
+        this.taskCollection.delete(task)
+        this.taskRenderer.remove(task)
+    }
+
     private handleClickAllDoneTasks = () => {
         if(!window.confirm('DONEのタスクを一括削除してよろしいでしょうか？')) return
         const doneTasks = this.taskCollection.filter(statusMap.done)
 
-        console.log(doneTasks)
+        doneTasks.forEach((task) => this.executeDeleteTask(task))
     }
 
     private handleDragAndDrop = (el: Element, sibling: Element | null, newStatus: Status) => {
@@ -68,9 +74,7 @@ class Application {
 
     private handleClickDeleteTask = (task: Task) => {
         if(!window.confirm(`「${task.title}」を削除してもよろしいですか？`)) return
-        this.eventListener.remove(task.id)
-        this.taskCollection.delete(task)
-        this.taskRenderer.remove(task)
+        this.executeDeleteTask(task)
         console.log(this.taskCollection)
     }
 }
